@@ -1,6 +1,7 @@
 use std::env;
 use std::fs;
 use std::str::Split;
+use std::vec::Vec;
 
 fn main() {
 
@@ -14,34 +15,40 @@ fn main() {
     //Converting string to slice, each item being one elf
     let elves: Split<&str> = contents.split("\n\n");
 
-    //creating array to contain elf totals, elfNum is there to be able to identify which elf we are adding up.
+    //creating array to contain elf totals, elf_num is there to be able to identify which elf we are adding up.
     //Likely there's a better way to do this but... was focusing on slice/array iteration
-    let mut elfNum=0;
-    let mut elfTotals: [i64;250]=[0;250];
+    let mut elf_num=0;
+    let mut elf_totals = Vec::new();
     for elf in elves{
-        let foodItems: Split<&str> = elf.split("\n");
-        for snack in foodItems{
-            let snackNum = snack.parse::<i64>().unwrap();
-            elfTotals[elfNum]=elfTotals[elfNum]+snackNum;
+        let food_items: Split<&str> = elf.split("\n");
+        let elf_total = 0;
+        for snack in food_items{
+            let snack_num = snack.parse::<i64>().unwrap();
+            elf_total = elf_total+snack_num;
         }
-
-        elfNum=elfNum+1;
+        elf_totals.push(elf_total);
+        elf_num=elf_num+1;
     }
+
+    let mut elf_totals_sortable = elf_totals.as_slice();
+
+    //sort descending
+    elf_totals_sortable.sort().reverse();
     
     //Answer to part one - the elf with the most calories
-    println!("Top Elf: {}", sort(elfTotals)[249]);
+    println!("Top Elf: {}", elf_totals_sortable[0]);
 
     //Answer to part two - total of top three elves
-    let sortedElfTotals = sort(elfTotals);
-    let topElves = &sortedElfTotals[247..250]; 
-    let mut topTotal = 0;
-    for elf in topElves{
-        topTotal = topTotal+elf;
+    let top_elves = elf_totals_sortable[0..3]; 
+    let mut top_total = 0;
+    for elf in top_elves{
+        top_total = top_total+elf;
     }
 
-    println!("Total of Top Elves: {}", topTotal);
+    println!("Total of Top Elves: {}", top_total);
 }
 
+/* comment out to use rust native functionality
 //simple sorting method
 fn sort<A, T>(mut array: A) -> A
 where
