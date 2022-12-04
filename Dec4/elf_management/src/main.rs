@@ -9,7 +9,8 @@ fn main() {
     //split into team strings of x-y,a-b format
     let team_list = contents.split("\n");
     //initialize result variable and vector to hold each team's assignments
-    let mut inefficient_teams = 0;
+    let mut inefficient_teams_1 = 0;
+    let mut inefficient_teams_2 = 0;
     let mut assignments: Vec<_> = Vec::new();//created globally to reduce memory reallocation
     //look at each team
     for team in team_list{
@@ -24,11 +25,15 @@ fn main() {
         }
         //vector should look like elf1low, elf1high, elf2low, elf2high. comparing accordingly
         if (assignments[0]<=assignments[2] && assignments[1]>=assignments[3])||(assignments[0]>=assignments[2] && assignments[1]<=assignments[3]){
-            inefficient_teams = inefficient_teams+1; 
+            inefficient_teams_1 = inefficient_teams_1+1; 
+        }
+        if !(assignments[0]>assignments[3] || assignments[1]<assignments[2]){
+            inefficient_teams_2 = inefficient_teams_2+1; 
         }
         //empty assignments so we are set for next team.
         assignments.clear()
     }
 
-    println!("Number of inefficient teams: {}", inefficient_teams);
+    println!("Number of very inefficient teams: {}", inefficient_teams_1);
+    println!("Number of at least somewhat inefficient teams: {}", inefficient_teams_2);
 }
