@@ -2,11 +2,12 @@ use std::vec::Vec;
 use std::fs;
 fn main() {
     let file_path = "./src/moves.txt";
-    let mut score_p1 = 0;
-    let mut score_p2 = 0;
+   
     let contents: &str = &fs::read_to_string(file_path)
         .expect("Should have been able to read the file");
 
+    let mut score_p1 = 0;
+    let mut score_p2 = 0;    
     let mut battles = Vec::new();
 
     for battle in contents.split("\n"){
