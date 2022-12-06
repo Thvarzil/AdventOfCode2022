@@ -22,14 +22,20 @@ fn main() {
         }
     }
 
-    
-
-    //confirming data is being separated as expected
+    let mut parsed_lines:Vec< Vec<char> > = Vec::new();
     for line in crates{
-        println!("{}", line);
-    }
-    println!("------------------------------");
-    for line in instructions{
-        println!("{}", line);
+       let attempt= line.chars();
+       let mut parsed_line: Vec<char> = Vec::new();
+       for (i,item) in attempt.enumerate(){
+            if i%4==1{
+                parsed_line.push(item);
+                print!("{}", item);
+            }
+       }
+       
+       println!("{}",parsed_line.len());
+
+       parsed_lines.push(parsed_line);
+       
     }
 }
